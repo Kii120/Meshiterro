@@ -7,6 +7,7 @@ class User < ApplicationRecord
   #1つのuser_idがたくさんのpost_imageモデルを持っている．
   # dependent: :destroyはidを削除したら投稿も全部消してくれる
   has_many :post_images, dependent: :destroy
+  has_many :post_comments, dependent: :destroy
   
   # これによりprofile_imageという名前でActiveStrageで画像を保存できるようになった
   has_one_attached :profile_image

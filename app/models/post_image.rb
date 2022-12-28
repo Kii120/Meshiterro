@@ -3,6 +3,7 @@ class PostImage < ApplicationRecord
   has_one_attached :image
   # userモデルに属してる
   belongs_to :user
+  has_many :post_comments, dependent: :destroy
   
   # 画像を貼らないとエラーになるの防ぐ
   # get_imageはアクションとは少し違う，メゾット名
