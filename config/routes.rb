@@ -15,6 +15,8 @@ Rails.application.routes.draw do
 
   # onlyを使うことで，resourcesが作ってくれるアクションを指定できる
   resources :post_images, only: [:new, :create, :index, :show, :destroy] do
+    # resourceと単数形にすることで/:idがURLに含まれなくなる→いいね機能は存在するかしないかの二択なので，idは
+    resource :favorite, only: [:create, :destroy]
     resources :post_comments, only: [:create, :destroy]
   end
   

@@ -3,7 +3,10 @@ class PostImage < ApplicationRecord
   has_one_attached :image
   # userモデルに属してる
   belongs_to :user
+  
+  # 複数形にする！
   has_many :post_comments, dependent: :destroy
+  has_many :favorites, dependent: :destroy
   
   # 画像を貼らないとエラーになるの防ぐ
   # get_imageはアクションとは少し違う，メゾット名
@@ -20,6 +23,12 @@ class PostImage < ApplicationRecord
       image.attach(io: File.open(file_path), filename: 'default-image.jpg', content_tipe: 'image/jpeg')
     end
     image
+  end
+  
+  # favorited_by?メゾット
+  # 与えたuserのidがfavoriteテーブル内に存在していればtrue，存在していなければfalse
+  def favorited_by?(user)
+    favorites.exists?(user_id: user.id)
   end
   
 end
