@@ -8,6 +8,9 @@ class PostImage < ApplicationRecord
   has_many :post_comments, dependent: :destroy
   has_many :favorites, dependent: :destroy
   
+  validates :shop_name, presence: true
+  validates :image, presence: true
+  
   # 画像を貼らないとエラーになるの防ぐ
   # get_imageはアクションとは少し違う，メゾット名
   def get_image

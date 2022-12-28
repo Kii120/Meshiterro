@@ -4,7 +4,10 @@ class UsersController < ApplicationController
     
     # .post_imagesで特定のユーザの投稿すべてを持ってこれる
     # .allはユーザ関係なく全部
-    @post_images = @user.post_images
+    # @post_images = @user.post_images
+    
+    # 1ページ分の決められた数のデータのみ，新しい順に取得．kaminariによって実装できるようになった
+    @post_images = @user.post_images.page(params[:page])
   end
 
   def edit

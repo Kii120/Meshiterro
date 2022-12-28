@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
-  
+  # ログインが成功していないとtopページ以外は表示できないようにする
+  # 強制的にログイン画面にリダイレクト
+  before_action :authenticate_user!, except: [:top]
   # privateのやつと同じ？
   before_action :configure_permitted_parameters, if: :devise_controller?
   

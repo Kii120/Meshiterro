@@ -10,12 +10,18 @@ class PostImagesController < ApplicationController
     # @post_image.user_idとは，↑で@post_imageに入ったuser_idカラムということ
     # current_user.idとはログイン中のユーザーのidのこと　deviseのみで使える
     @post_image.user_id = current_user.id
-    @post_image.save
-    redirect_to post_images_path
+    if @post_image.save
+      redirect_to post_images_path
+    else
+      render :new
+    end
   end
 
   def index
-    @post_images = PostImage.all
+    # @post_images = PostImage.all
+    
+    # 1ページ分の決められた数のデータのみ，新しい順に取得．kaminariによって実装できるようになった
+    @post_images = PostImage.page(params[:page])
   end
 
   def show
