@@ -2,37 +2,85 @@
 <html>
   <head>
     <title>Meshiterro</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    
+    <!--maximum-scaleのやつ追加した-->
+    <meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <!--link(app/assets下のファイルを参照)をpack(app/javascript下のファイルを参照)に直す-->
+    <!--<%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>-->
+    <%= stylesheet_pack_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
-  <body>
-    <header>
-      <% if user_signed_in? %>
-        <li>
-          <%= link_to "投稿フォーム", new_post_image_path %>
-        </li>
-        <li>
-          <%= link_to "マイページ", user_path(current_user.id) %>
-        </li>
-        <li>
-          <!-- link_toは基本getなため，deleteとかpatchの時はちゃんと書かないとダメ -->
-          <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
-        </li>
-      <% else %>
-        <li>
-          <%= link_to "新規登録", new_user_registration_path %>
-        </li>
-        <li>
-          <%= link_to "ログイン", new_user_session_path %>
-          
-        </li>
-      <% end %>
+  <body class="d-flex flex-column vh-100">
+    <header class="shadow-sm">
+      <!--navbarクラスはナビゲーションバーを表示-->
+      <!--nabvar-expand-lgクラスは指定した幅(lg)によってナビゲーションバーとナビゲーションアイコン（ハンバーガー）を切り替え-->
+      <!--navbar-lightで色（light）を指定-->
+      <nav class="navbar nabvar-expand-lg navbar-light">
+        <div class="container">
+          <!--navbar-brandはnavbarのサポート-->
+          <!--p-(サイズ)はロゴのpaddingの指定-->
+          <a class="navbar-brand p-3" href="/"><%= image_tag('logo.png') %></a>
+          <!--navbar-togglerはナビゲーションアイコン（ハンバーガー）の枠-->
+          <!--data-target=...は任意のidを付ける役割．だから#付ける-->
+          <!--data-toggle="collapse" data-target="#[id名]" aria-controls="[id名]" aria-expanded="false" aria-label="Toggle navigation"は-->
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <!--navbar-toggler-iconはナビゲーションアイコン（ハンバーガー）の三本線部分-->
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!--collapseクラスで囲む部分はバーの中に隠したい要素-->
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ml-auto">
+              <% if user_signed_in? %>
+           　　   <li>
+                <!-- link_toは基本getなため，deleteとかpatchの時はちゃんと書かないとダメ -->
+                <%= link_to "ログアウト", destroy_user_session_path, method: :delete %>
+                </li>
+                <li>
+                <%= link_to "投稿フォーム", new_post_image_path %>
+                </li>
+                <li>
+                <%= link_to "マイページ", user_path(current_user.id) %>
+                </li>
+              <% else %>
+                <li>
+                <%= link_to "新規登録", new_user_registration_path %>
+                </li>
+                <li>
+                <%= link_to "ログイン", new_user_session_path %>
+                </li>
+              <% end %>
+            </ul>
+          </div>
+        </div>
+      </nav>
     </header>
+    <main class="mb-auto">
     <%= yield %>
+    </main>
+    <footer class="bg-dark text-white pt-5 pb-4">
+      <div class="container">
+        <div class="row no-gutters">
+          <div class="col-md-4">
+            <p>善良な市民同士で無差別に食欲を煽るSNS</p>
+            <%= image_tag('logo-white.png') %>
+          </div>
+          <div class="col-md-8">
+            <h6 class="text-white mt-2 mb-3">Link</h6>
+            <ul class="p-0 list-unstyled">
+              <li>
+                <a href="" title="About" class="text-white-50">会社概要</a>
+              </li>
+              <li>
+                <a href="" title="License informations" class="text-white-50">プライバシーポリシー</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>

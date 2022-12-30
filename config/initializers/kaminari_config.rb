@@ -2,7 +2,7 @@
 
 Kaminari.configure do |config|
   
-  # ページネーションによる表示数
+  # ページネーションによる表示数制限
   config.default_per_page = 5
   # config.max_per_page = nil
   # config.window = 4
